@@ -1,0 +1,484 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover, maximum-scale=1" />
+<meta name="theme-color" content="#2a1411" />
+<title>Content Room · ECCOPTS Media</title>
+<meta name="apple-mobile-web-app-capable" content="yes" />
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+<link rel="icon" href="https://eccopts.ca/wp-content/uploads/2020/03/eccopts-logo-temporary-1.png" />
+<link rel="apple-touch-icon" href="https://eccopts.ca/wp-content/uploads/2020/03/eccopts-logo-temporary-1.png" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,500&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,700&display=swap" rel="stylesheet" />
+
+<!-- =========================================================================
+     TO MAKE IT A REAL SHARED LINK (≈5 min, free). Until then it runs in
+     PREVIEW mode (saves to this phone only) so you can show the team the look.
+       1) free project at supabase.com
+       2) SQL editor → paste supabase-setup.sql → Run
+       3) Settings → API → copy "Project URL" + "anon public" key
+       4) paste them below, save, re-upload
+     ========================================================================= -->
+<script>
+  window.ECCOPTS_CONFIG = {
+    SUPABASE_URL: "https://rdzgdftahsrxdousvaiy.supabase.co",
+    SUPABASE_ANON_KEY: "sb_publishable_fnZsP4yquXFsRUJK-H6-ow_vRAcQlUG",
+  };
+</script>
+
+<style>
+  :root {
+    --paper-0: oklch(98.4% 0.008 70);
+    --paper-1: oklch(96.6% 0.012 68);
+    --paper-2: oklch(94% 0.016 66);
+    --ink-0:   oklch(20% 0.02 40);
+    --ink-1:   oklch(28% 0.022 40);
+    --ink-2:   oklch(47% 0.02 45);
+    --ink-3:   oklch(62% 0.018 50);
+    --line:    oklch(89% 0.016 65);
+    --line-2:  oklch(83% 0.02 60);
+    --oxblood:   oklch(40% 0.115 27);
+    --oxblood-d: oklch(31% 0.1 27);
+    --gold:      oklch(70% 0.105 80);
+    --gold-soft: oklch(79% 0.075 82);
+    --gold-deep: oklch(57% 0.105 76);
+    --ground:    oklch(18% 0.03 32);
+    --ground-2:  oklch(13% 0.026 32);
+    --on-dark:   oklch(95% 0.012 75);
+    --on-dark-2: oklch(80% 0.02 72);
+    --ease: cubic-bezier(0.23, 1, 0.32, 1);
+    --tabbar-h: 64px;
+    --appw: 480px;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
+  html, body { height: 100%; }
+  body {
+    font-family: "DM Sans", system-ui, sans-serif;
+    color: var(--ink-1);
+    line-height: 1.55;
+    -webkit-font-smoothing: antialiased;
+    /* desktop: soft ground so the app reads like a phone, not a stretched site */
+    background:
+      radial-gradient(120% 80% at 50% -10%, oklch(24% 0.04 30) 0%, var(--ground-2) 55%);
+    overflow-x: hidden;
+  }
+
+  .app {
+    position: relative;
+    width: 100%; max-width: var(--appw); margin: 0 auto;
+    min-height: 100dvh; background: var(--paper-1);
+    box-shadow: 0 0 70px oklch(10% 0.02 30 / .5);
+    display: flex; flex-direction: column;
+  }
+  /* subtle static grain */
+  .app::after {
+    content: ""; position: absolute; inset: 0; z-index: 60; pointer-events: none;
+    opacity: 0.04; mix-blend-mode: multiply;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+    background-size: 140px 140px;
+  }
+
+  h1, h2, h3, h4, .serif { font-family: "Cormorant Garamond", Georgia, serif; font-weight: 600; letter-spacing: -0.01em; line-height: 1.08; }
+  .kicker { font-size: 0.66rem; font-weight: 500; letter-spacing: 0.2em; text-transform: uppercase; color: var(--gold-deep); }
+
+  /* ---------- HEADER ---------- */
+  .topbar {
+    position: sticky; top: 0; z-index: 40;
+    display: flex; align-items: center; gap: 11px;
+    padding: calc(env(safe-area-inset-top) + 13px) 18px 13px;
+    background: oklch(15% 0.026 32 / .92); backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px);
+    border-bottom: 1px solid oklch(95% 0.012 75 / .1);
+  }
+  .topbar img { height: 30px; width: auto; }
+  .topbar .tt { display: flex; flex-direction: column; line-height: 1.08; }
+  .topbar .tt b { font-size: 0.82rem; font-weight: 700; letter-spacing: 0.03em; color: var(--on-dark); }
+  .topbar .tt span { font-size: 0.6rem; letter-spacing: 0.18em; text-transform: uppercase; color: var(--on-dark-2); }
+  .topbar .pill {
+    margin-left: auto; font-size: 0.62rem; letter-spacing: 0.04em; color: var(--on-dark-2);
+    display: flex; align-items: center; gap: 6px; border: 1px solid oklch(95% 0.012 75 / .16);
+    padding: 5px 10px; border-radius: 100px;
+  }
+  .topbar .pill .led { width: 7px; height: 7px; border-radius: 50%; background: var(--ink-3); }
+  .topbar .pill.live .led { background: oklch(66% 0.16 150); box-shadow: 0 0 0 3px oklch(66% 0.16 150 / .2); }
+
+  /* ---------- VIEWS ---------- */
+  main { flex: 1; }
+  .view { display: none; padding-bottom: calc(var(--tabbar-h) + env(safe-area-inset-bottom) + 24px); }
+  .view.active { display: block; animation: fade .35s var(--ease); }
+  @keyframes fade { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: none; } }
+
+  /* ---------- ADD VIEW ---------- */
+  .banner { position: relative; height: 152px; overflow: hidden; }
+  .banner img { width: 100%; height: 100%; object-fit: cover; object-position: center 30%; }
+  .banner::after { content: ""; position: absolute; inset: 0; background: linear-gradient(180deg, oklch(18% 0.03 32 / .45) 0%, oklch(18% 0.03 32 / .35) 40%, var(--paper-1) 100%), radial-gradient(120% 80% at 75% 10%, oklch(40% 0.115 27 / .5), transparent 60%); }
+  .banner .cap { position: absolute; left: 18px; bottom: 16px; z-index: 2; }
+  .banner .cap .kicker { color: var(--gold-soft); }
+  .banner .cap h1 { color: var(--on-dark); font-size: 2.1rem; margin-top: 3px; }
+
+  .pad { padding: 22px 18px 0; }
+  .lead { color: var(--ink-2); font-size: 0.95rem; margin: -4px 0 22px; }
+
+  .field { margin-bottom: 18px; }
+  .field > label { display: block; font-size: 0.72rem; font-weight: 600; letter-spacing: 0.05em; text-transform: uppercase; color: var(--ink-1); margin-bottom: 9px; }
+  .field > label .opt { color: var(--ink-3); text-transform: none; letter-spacing: 0; font-weight: 400; }
+  .field input, .field textarea {
+    width: 100%; font-family: "DM Sans"; font-size: 16px; color: var(--ink-0);
+    background: var(--paper-0); border: 1px solid var(--line-2); border-radius: 14px; padding: 14px 15px;
+    transition: border-color .2s var(--ease), box-shadow .2s var(--ease);
+  }
+  .field textarea { resize: none; min-height: 92px; line-height: 1.5; }
+  .field input::placeholder, .field textarea::placeholder { color: var(--ink-3); }
+  .field input:focus, .field textarea:focus { outline: none; border-color: var(--gold-deep); box-shadow: 0 0 0 4px oklch(70% 0.105 80 / .16); }
+
+  .chips { display: flex; flex-wrap: wrap; gap: 8px; }
+  .chip {
+    font-size: 0.84rem; color: var(--ink-1); background: var(--paper-0);
+    border: 1px solid var(--line-2); border-radius: 100px; padding: 10px 14px; cursor: pointer;
+    display: inline-flex; align-items: center; gap: 7px; transition: all .18s var(--ease);
+    min-height: 40px;
+  }
+  .chip .dot { width: 7px; height: 7px; border-radius: 50%; background: var(--gold-deep); opacity: .45; transition: .18s; }
+  .chip[aria-pressed="true"] { background: var(--oxblood); border-color: var(--oxblood); color: var(--on-dark); }
+  .chip[aria-pressed="true"] .dot { background: var(--gold-soft); opacity: 1; transform: scale(1.25); }
+  .chip:active { transform: scale(0.96); }
+
+  .send {
+    width: 100%; font-family: "DM Sans"; font-weight: 600; font-size: 1.02rem; color: var(--on-dark);
+    background: var(--oxblood); border: 0; border-radius: 16px; padding: 17px; cursor: pointer;
+    margin-top: 6px; transition: transform .12s ease, background .2s var(--ease);
+    box-shadow: 0 10px 26px oklch(40% 0.115 27 / .3);
+  }
+  .send:active { transform: scale(0.98); background: var(--oxblood-d); }
+  .send:disabled { opacity: .55; }
+  .hint { text-align: center; font-size: 0.8rem; color: var(--ink-3); margin-top: 12px; }
+
+  /* ---------- WALL VIEW ---------- */
+  .wall-head { padding: 22px 18px 6px; display: flex; align-items: baseline; gap: 12px; }
+  .wall-head b { font-family: "Cormorant Garamond"; font-size: 2.8rem; font-weight: 600; color: var(--oxblood); line-height: .85; }
+  .wall-head span { font-size: 0.74rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--ink-2); }
+
+  .filters { display: flex; gap: 7px; overflow-x: auto; padding: 14px 18px 16px; scrollbar-width: none; -webkit-overflow-scrolling: touch; }
+  .filters::-webkit-scrollbar { display: none; }
+  .filt { flex: 0 0 auto; font-size: 0.8rem; color: var(--ink-2); background: var(--paper-0); border: 1px solid var(--line-2); border-radius: 100px; padding: 8px 13px; cursor: pointer; white-space: nowrap; transition: .18s; }
+  .filt.active { background: var(--ink-0); border-color: var(--ink-0); color: var(--paper-0); }
+
+  .group { padding: 8px 18px 26px; scroll-margin-top: 70px; }
+  .group .gh { display: flex; align-items: baseline; gap: 10px; margin-bottom: 4px; }
+  .group .gh .idx { font-family: "Cormorant Garamond"; font-style: italic; font-size: 1.15rem; color: var(--gold-deep); }
+  .group .gh h3 { font-size: 1.4rem; color: var(--ink-0); }
+  .group .gh .ct { margin-left: auto; font-size: 0.72rem; color: var(--ink-3); white-space: nowrap; }
+  .group .blurb { color: var(--ink-2); font-size: 0.86rem; margin-bottom: 14px; }
+
+  .idea {
+    background: var(--paper-0); border: 1px solid var(--line); border-radius: 15px; padding: 15px 16px 13px;
+    margin-bottom: 11px; position: relative; opacity: 0; transform: translateY(12px);
+  }
+  .idea.in { opacity: 1; transform: none; transition: opacity .5s var(--ease), transform .5s var(--ease); }
+  .idea h4 { font-size: 1.22rem; color: var(--ink-0); line-height: 1.16; }
+  .idea p { margin-top: 6px; font-size: 0.9rem; color: var(--ink-2); }
+  .idea .foot { margin-top: 12px; padding-top: 10px; border-top: 1px solid var(--line); display: flex; align-items: center; justify-content: space-between; }
+  .idea .who { display: flex; align-items: center; gap: 8px; font-size: 0.78rem; color: var(--ink-1); }
+  .idea .av { width: 22px; height: 22px; border-radius: 50%; background: var(--oxblood); color: var(--on-dark); display: grid; place-items: center; font-size: 0.66rem; font-weight: 600; }
+  .idea .when { font-size: 0.72rem; color: var(--ink-3); }
+  .idea.seed { background: linear-gradient(180deg, var(--paper-2), var(--paper-0)); }
+  .idea.seed .sm { position: absolute; top: 13px; right: 14px; font-size: 0.56rem; letter-spacing: 0.08em; text-transform: uppercase; color: var(--gold-deep); }
+  .empty { color: var(--ink-3); font-size: 0.88rem; font-style: italic; }
+
+  .wall-foot { text-align: center; padding: 8px 18px 6px; }
+  .wall-foot .verse { font-family: "Cormorant Garamond"; font-style: italic; font-size: 1.2rem; color: var(--gold-deep); }
+
+  /* ---------- TAB BAR ---------- */
+  .tabbar {
+    position: fixed; left: 50%; bottom: 0; transform: translateX(-50%);
+    width: 100%; max-width: var(--appw); z-index: 50;
+    display: grid; grid-template-columns: 1fr 1fr;
+    background: oklch(15% 0.026 32 / .94); backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px);
+    border-top: 1px solid oklch(95% 0.012 75 / .1);
+    padding-bottom: env(safe-area-inset-bottom);
+  }
+  .tab {
+    background: none; border: 0; cursor: pointer; color: var(--on-dark-2);
+    height: var(--tabbar-h); display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 3px;
+    font-family: "DM Sans"; font-size: 0.7rem; font-weight: 500; letter-spacing: 0.04em;
+    transition: color .2s var(--ease); position: relative;
+  }
+  .tab svg { width: 22px; height: 22px; stroke: currentColor; fill: none; stroke-width: 1.7; }
+  .tab.active { color: var(--gold-soft); }
+  .tab.active::before { content: ""; position: absolute; top: 0; left: 50%; transform: translateX(-50%); width: 30px; height: 2px; background: var(--gold); border-radius: 2px; }
+  .tab .badge { position: absolute; top: 11px; right: 50%; margin-right: -28px; background: var(--oxblood); color: var(--on-dark); font-size: 0.58rem; font-weight: 600; min-width: 17px; height: 17px; border-radius: 100px; display: grid; place-items: center; padding: 0 4px; }
+
+  /* ---------- TOAST ---------- */
+  #toast {
+    position: fixed; left: 50%; bottom: calc(var(--tabbar-h) + env(safe-area-inset-bottom) + 16px);
+    transform: translate(-50%, 140%); z-index: 90;
+    background: var(--ink-0); color: var(--paper-0); padding: 12px 20px; border-radius: 100px;
+    font-size: 0.86rem; box-shadow: 0 14px 40px oklch(10% 0.02 30 / .4); opacity: 0;
+    transition: transform .45s var(--ease), opacity .35s var(--ease); display: flex; align-items: center; gap: 9px;
+    max-width: calc(var(--appw) - 36px); white-space: nowrap;
+  }
+  #toast.show { transform: translate(-50%, 0); opacity: 1; }
+  #toast .d { width: 7px; height: 7px; border-radius: 50%; background: var(--gold); flex: 0 0 auto; }
+
+  @media (prefers-reduced-motion: reduce) {
+    .view.active, .idea { animation: none !important; opacity: 1 !important; transform: none !important; transition: none !important; }
+  }
+</style>
+</head>
+<body>
+<div class="app">
+
+  <header class="topbar">
+    <img src="https://eccopts.ca/wp-content/uploads/2020/03/eccopts-logo-temporary-1.png" alt="ECCOPTS" referrerpolicy="no-referrer" onerror="this.style.display='none'" />
+    <div class="tt"><b>The Content Room</b><span>ECCOPTS Media</span></div>
+    <div class="pill" id="pill"><span class="led"></span><span id="pill-t">Preview</span></div>
+  </header>
+
+  <main>
+    <!-- ADD -->
+    <section class="view active" id="view-add">
+      <div class="banner">
+        <img src="https://eccopts.ca/wp-content/uploads/2024/12/452865196_926686499497064_4957952872673420546_n.jpg" alt="" referrerpolicy="no-referrer" onerror="this.parentElement.style.height='0'" />
+        <div class="cap"><span class="kicker">Senior High School Convention</span><h1>Drop an idea.</h1></div>
+      </div>
+      <div class="pad">
+        <p class="lead">Anything for the convention content. POV, interview, the end-of-camp film, a moment to film. No idea too small.</p>
+        <form id="form" autocomplete="off">
+          <div class="field">
+            <label>Which section?</label>
+            <div class="chips" id="chips" role="group" aria-label="Choose a section"></div>
+          </div>
+          <div class="field">
+            <label for="f-title">The idea</label>
+            <input id="f-title" type="text" maxlength="120" placeholder="e.g. Favorite hymn, then play it under their face" required />
+          </div>
+          <div class="field">
+            <label for="f-details">A little more <span class="opt">(optional)</span></label>
+            <textarea id="f-details" maxlength="600" placeholder="How you picture it, who, when, the vibe..."></textarea>
+          </div>
+          <div class="field">
+            <label for="f-name">Your name <span class="opt">(optional)</span></label>
+            <input id="f-name" type="text" maxlength="40" placeholder="Claim your idea" />
+          </div>
+          <button class="send" id="send" type="submit">Add to the wall</button>
+          <p class="hint" id="hint">Pick a section to start.</p>
+        </form>
+      </div>
+    </section>
+
+    <!-- WALL -->
+    <section class="view" id="view-wall">
+      <div class="wall-head"><b id="count">0</b><span>ideas on<br>the wall</span></div>
+      <div class="filters" id="filters"></div>
+      <div id="groups"></div>
+      <div class="wall-foot"><p class="verse">"Let your light so shine."</p></div>
+    </section>
+  </main>
+
+  <nav class="tabbar">
+    <button class="tab active" id="tab-add" data-view="add">
+      <svg viewBox="0 0 24 24"><path d="M12 5v14M5 12h14" stroke-linecap="round"/></svg>
+      Add
+    </button>
+    <button class="tab" id="tab-wall" data-view="wall">
+      <svg viewBox="0 0 24 24"><rect x="4" y="4" width="7" height="7" rx="1.5"/><rect x="13" y="4" width="7" height="7" rx="1.5"/><rect x="4" y="13" width="7" height="7" rx="1.5"/><rect x="13" y="13" width="7" height="7" rx="1.5"/></svg>
+      Wall<span class="badge" id="badge">0</span>
+    </button>
+  </nav>
+
+  <div id="toast"><span class="d"></span><span id="toast-msg">Idea added.</span></div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script>
+(function () {
+  "use strict";
+
+  const CATEGORIES = [
+    { key:"film", label:"End-of-Camp Film", blurb:"The big video on the screen the last night. Everyone should find themselves in it.",
+      seeds:[
+        { title:'"Who is God to you?"', details:'Ask all week, 2 sentences each. Cut faces together, build to the strongest, end on silence.', name:"Chadi" },
+        { title:'"This week" recap', details:'Sat + Sun: what do you like most so far? Monday morning: favorite moment in camp? Cut to one hymn.', name:"Chadi" },
+      ]},
+    { key:"interviews", label:"Interviews", blurb:"Cinematic look, clean audio, let people pause.",
+      seeds:[
+        { title:"World Cup predictions", details:"Fun opener to get people talking.", name:"Chadi" },
+        { title:"Why did you sign up?", details:"", name:"Chadi" },
+        { title:"Favorite part of the liturgy", details:"Priest / liturgy vibe quotes.", name:"Chadi" },
+        { title:"What did you learn from this topic?", details:"Ask after each session.", name:"Chadi" },
+        { title:"What will you apply starting now?", details:"After the topic, what changes in daily life.", name:"Chadi" },
+      ]},
+    { key:"pov", label:"POV", blurb:"First-person, in-the-moment clip montages.",
+      seeds:[
+        { title:"POV: you signed up for the church trip", details:"Clip montage, packing to arrival.", name:"Chadi" },
+        { title:"POV: World Cup final during a convention", details:"The clash, but faith wins. Funny + meaningful.", name:"Chadi" },
+      ]},
+    { key:"reels", label:"Reels & Content", blurb:"Not interviews, not trends.",
+      seeds:[
+        { title:'"Why we come back"', details:"Straight reel. Year-after promo for next convention.", name:"Chadi" },
+        { title:"Day in the life", details:"One servant or youth, morning prayer to Tasbeha.", name:"Chadi" },
+        { title:"Expectations vs reality", details:"", name:"Chadi" },
+        { title:"Convention starter pack", details:"What to pack, but funny.", name:"Chadi" },
+        { title:"Tasbeha vibe check", details:"How to perfectly end a convention night.", name:"Chadi" },
+      ]},
+    { key:"quickfire", label:"Quickfire", blurb:"Rapido presto. One question, fast cuts.",
+      seeds:[
+        { title:"What's your favorite hymn?", details:"", name:"Chadi" },
+        { title:"Who's your favorite saint?", details:"", name:"Chadi" },
+        { title:"In one word, describe your day", details:"", name:"Chadi" },
+      ]},
+    { key:"broll", label:"Filming Moments", blurb:"B-roll to capture all week.",
+      seeds:[
+        { title:"Liturgy", details:"Incense in the light, hands, icons, the cross.", name:"Chadi" },
+        { title:"Tasbeha", details:"The praises as the night closes.", name:"Chadi" },
+      ]},
+    { key:"pre", label:"Pre-Convention", blurb:"Build hype before everyone arrives.",
+      seeds:[
+        { title:"Ask Tant if we can realize this", details:"Flagged: likely not possible. Worth one more look.", name:"Chadi" },
+      ]},
+    { key:"other", label:"Wildcard", blurb:"Anything that does not fit a box yet.", seeds:[] },
+  ];
+  const BY = Object.fromEntries(CATEGORIES.map(c => [c.key, c]));
+  const SEED_TOTAL = CATEGORIES.reduce((n,c)=>n+c.seeds.length,0);
+
+  const cfg = window.ECCOPTS_CONFIG || {};
+  const LIVE = !!(cfg.SUPABASE_URL && cfg.SUPABASE_ANON_KEY);
+  let sb = null, ideas = [], activeFilter = "all", chosen = null;
+  const seen = new Set();
+
+  const $ = s => document.querySelector(s);
+  const esc = s => (s||"").replace(/[&<>"']/g, c => ({ "&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;" }[c]));
+  const initials = n => { n=(n||"").trim(); if(!n) return "·"; const p=n.split(/\s+/); return ((p[0][0]||"")+(p[1]?p[1][0]:"")).toUpperCase(); };
+  const rel = iso => { const d=Date.now()-new Date(iso).getTime();
+    if(d<60000) return "just now"; if(d<3600000) return Math.floor(d/60000)+"m"; if(d<86400000) return Math.floor(d/3600000)+"h";
+    return new Date(iso).toLocaleDateString(undefined,{month:"short",day:"numeric"}); };
+
+  /* chips */
+  const chips = $("#chips");
+  CATEGORIES.forEach(c => {
+    const b = document.createElement("button");
+    b.type="button"; b.className="chip"; b.setAttribute("aria-pressed","false"); b.dataset.key=c.key;
+    b.innerHTML = '<span class="dot"></span>'+esc(c.label);
+    b.onclick = () => { chosen=c.key; [...chips.children].forEach(x=>x.setAttribute("aria-pressed", x===b)); $("#hint").textContent="Section: "+c.label; };
+    chips.appendChild(b);
+  });
+
+  /* filters */
+  function buildFilters(){
+    const f = $("#filters"); f.innerHTML="";
+    const mk=(key,label)=>{ const b=document.createElement("button"); b.className="filt"+(activeFilter===key?" active":""); b.textContent=label;
+      b.onclick=()=>{ activeFilter=key; render(); if(key!=="all") document.getElementById("g-"+key)?.scrollIntoView({behavior:"smooth",block:"start"}); }; f.appendChild(b); };
+    mk("all","All"); CATEGORIES.forEach(c=>mk(c.key,c.label));
+  }
+
+  const io = ("IntersectionObserver" in window) ? new IntersectionObserver(es=>es.forEach(e=>{ if(e.isIntersecting){ e.target.classList.add("in"); io.unobserve(e.target);} }),{threshold:0.05}) : null;
+
+  function card(it, seedFlag){
+    const c = BY[it.category];
+    const el = document.createElement("article");
+    el.className = "idea"+(seedFlag?" seed":"");
+    el.innerHTML =
+      (seedFlag?'<span class="sm">starter</span>':'')+
+      '<h4>'+esc(it.title)+'</h4>'+
+      (it.details?'<p>'+esc(it.details)+'</p>':'')+
+      '<div class="foot"><span class="who"><span class="av">'+esc(initials(it.name))+'</span>'+
+      esc(it.name&&it.name.trim()?it.name:"Anonymous")+'</span>'+
+      '<span class="when">'+(seedFlag?"on the board":rel(it.created_at))+'</span></div>';
+    if(io) io.observe(el); else el.classList.add("in");
+    return el;
+  }
+
+  function render(){
+    buildFilters();
+    const groups = $("#groups"); groups.innerHTML="";
+    CATEGORIES.forEach(c=>{ c._all = c.seeds.map(s=>({ ...s, category:c.key, _seed:true })); });
+    ideas.forEach(it => (BY[it.category]||BY.other)._all.push(it));
+    const cats = activeFilter==="all" ? CATEGORIES : CATEGORIES.filter(c=>c.key===activeFilter);
+    cats.forEach(c=>{
+      const items=c._all;
+      const g=document.createElement("div"); g.className="group"; g.id="g-"+c.key;
+      g.innerHTML='<div class="gh"><span class="idx">'+String(CATEGORIES.indexOf(c)+1).padStart(2,"0")+'</span><h3>'+esc(c.label)+'</h3><span class="ct">'+items.length+'</span></div><p class="blurb">'+esc(c.blurb)+'</p>';
+      if(!items.length){ const e=document.createElement("p"); e.className="empty"; e.textContent="Nothing here yet. Be the first."; g.appendChild(e); }
+      else items.forEach(it=>g.appendChild(card(it,it._seed)));
+      groups.appendChild(g);
+    });
+    const grand = SEED_TOTAL + ideas.length;
+    countUp($("#count"), grand);
+    $("#badge").textContent = grand;
+  }
+
+  function countUp(el, target){
+    if(!el) return; const from=parseInt(el.textContent)||0; if(from===target){el.textContent=target;return;}
+    const t0=performance.now();
+    (function step(now){ const p=Math.min((now-t0)/700,1); const e=1-Math.pow(1-p,4);
+      el.textContent=Math.floor(from+(target-from)*e); if(p<1) requestAnimationFrame(step); else el.textContent=target; })(t0);
+  }
+
+  /* tabs */
+  function show(v){
+    $("#view-add").classList.toggle("active", v==="add");
+    $("#view-wall").classList.toggle("active", v==="wall");
+    $("#tab-add").classList.toggle("active", v==="add");
+    $("#tab-wall").classList.toggle("active", v==="wall");
+    window.scrollTo({ top:0, behavior:"auto" });
+  }
+  $("#tab-add").onclick = () => show("add");
+  $("#tab-wall").onclick = () => show("wall");
+
+  /* persistence */
+  const LS="eccopts_ideas_v1";
+  const loadLocal=()=>{ try{ return JSON.parse(localStorage.getItem(LS))||[]; }catch{ return []; } };
+  const saveLocal=a=>{ try{ localStorage.setItem(LS, JSON.stringify(a)); }catch{} };
+
+  function setMode(live){
+    const p=$("#pill");
+    if(live){ p.classList.add("live"); $("#pill-t").textContent="Live"; }
+    else { $("#pill-t").textContent="Preview"; }
+  }
+
+  async function init(){
+    if(LIVE && window.supabase){
+      try{
+        sb = window.supabase.createClient(cfg.SUPABASE_URL, cfg.SUPABASE_ANON_KEY);
+        const { data, error } = await sb.from("ideas").select("*").order("created_at",{ascending:false});
+        if(error) throw error;
+        ideas = (data||[]).filter(r=>r.title!=="setup_connectivity_test"); ideas.forEach(i=>seen.add(i.id)); setMode(true);
+        sb.channel("ideas-rt").on("postgres_changes",{event:"INSERT",schema:"public",table:"ideas"},pl=>{
+          const r=pl.new; if(seen.has(r.id)||r.title==="setup_connectivity_test") return; seen.add(r.id); ideas.unshift(r); render();
+          flash(r.name? r.name+" just added an idea":"New idea on the wall");
+        }).subscribe();
+      }catch(e){ console.warn("local mode:",e); ideas=loadLocal(); setMode(false); }
+    } else { ideas=loadLocal(); setMode(false); }
+    render();
+  }
+
+  /* submit */
+  $("#form").addEventListener("submit", async e=>{
+    e.preventDefault();
+    const title=$("#f-title").value.trim();
+    if(!chosen){ $("#hint").textContent="Pick a section first."; chips.scrollIntoView({behavior:"smooth",block:"center"}); return; }
+    if(!title){ $("#f-title").focus(); return; }
+    const rec={ id:(crypto.randomUUID?crypto.randomUUID():"id-"+Date.now()+Math.random()),
+      category:chosen, title, details:$("#f-details").value.trim(), name:$("#f-name").value.trim(), created_at:new Date().toISOString() };
+    const btn=$("#send"); btn.disabled=true;
+    if(sb){
+      const { error } = await sb.from("ideas").insert({ category:rec.category, title:rec.title, details:rec.details, name:rec.name });
+      if(error){ console.warn(error); flash("Could not save, check connection"); btn.disabled=false; return; }
+      seen.add(rec.id); ideas.unshift(rec);
+    } else { ideas.unshift(rec); saveLocal(ideas); }
+    btn.disabled=false; e.target.reset(); chosen=null;
+    [...chips.children].forEach(x=>x.setAttribute("aria-pressed","false"));
+    $("#hint").textContent="Pick a section to start.";
+    render(); flash("Idea added. Yalla, keep them coming.");
+    show("wall"); setTimeout(()=>document.getElementById("g-"+rec.category)?.scrollIntoView({behavior:"smooth",block:"start"}), 120);
+  });
+
+  let tt; function flash(m){ const t=$("#toast"); $("#toast-msg").textContent=m; t.classList.add("show"); clearTimeout(tt); tt=setTimeout(()=>t.classList.remove("show"),3000); }
+
+  init();
+})();
+</script>
+</body>
+</html>
